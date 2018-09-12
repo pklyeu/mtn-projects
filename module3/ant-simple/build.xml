@@ -1,8 +1,22 @@
 <project name="TestProject" default="dist" basedir=".">
 
-  <property name="src" location="src"/>
+  <property name="src" location="src/com/test"/>
   <property name="build" location="build"/>
   <property name="dist"  location="dist"/>
+  <property name="date" location="date"/>
+  <property name="list" location="list"/>
+
+  <property name="unit.test" value="*.java" />
+
+<!--  <batchtest fork="yes" todir="$dist}">
+    <fileset dir="${src}"  includes="*.java}"/>
+  </batchtest>
+-->
+
+  <presetdef name="javac">
+     <javac includeantruntime="false" />
+  </presetdef>
+
 
   <target name="init">
     <mkdir dir="${build}"/>
@@ -21,4 +35,17 @@
     <delete dir="${build}"/>
     <delete dir="${dist}"/>
   </target>
+  
+  <target name="date">
+   <echo message="Printing system date ..."/>
+      <exec executable="date" />
+  </target>
+
+  <target name="list">
+   <echo message="Listing source folder ..."/>
+      <exec executable="ls">
+       <arg line="-l ${source}" />
+      </exec>
+  </target>
+  
 </project>
