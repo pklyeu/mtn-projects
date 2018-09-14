@@ -8,11 +8,6 @@
 
   <property name="unit.test" value="*.java" />
 
-<!--  <batchtest fork="yes" todir="$dist}">
-    <fileset dir="${src}"  includes="*.java}"/>
-  </batchtest>
--->
-
   <presetdef name="javac">
      <javac includeantruntime="false" />
   </presetdef>

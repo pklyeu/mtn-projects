@@ -1,0 +1,64 @@
+<project name="Project" default="init" basedir=".">
+
+  <property name="src" location="src/com/test"/>
+  <property name="test" location="test/com/test"/>
+  <property name="build" location="build"/>
+  <property name="dist"  location="dist"/>
+  <property name="date" location="date"/>
+  <property name="home" value="${basedir}"/>
+
+
+  <presetdef name="javac">
+     <javac includeantruntime="false" />
+  </presetdef>
+
+   <tstamp>
+      <format property="TODAY_MY" pattern="yyyyMMdd-HHmm"  locale="en,UK" offset="-5" unit="hour"/>
+   </tstamp>
+
+  <target name="init" depends="clean">
+<mkdir dir="${build}"/>
+<echo>time = ${TODAY_MY}
+src = ${src}
+build = ${build}
+home = ${home}
+dist = ${dist}</echo>
+  </target>
+
+  <target name="compile" depends="init" >
+    <javac srcdir="${src}" destdir="${build}"/>
+  </target>
+
+  <target name="dist" depends="compile" >
+    <jar jarfile="${dist}/Project${TODAY_MY}.jar" basedir="${build}"/>
+  </target>
+
+  <target name="clean">
+    <delete dir="${build}"/>
+    <delete dir="${dist}"/>
+  </target>
+  
+  <target name="date">
+   <echo message="Printing system date ..."/>
+      <exec executable="date" />
+  </target>
+
+<target name="test_compile" depends="dist">
+     <javac  srcdir="${test}" destdir="${build}" classpath="./lib/junit-4.11.jar"/>
+ </target>
+
+ <target name="test" depends="test_compile">
+          <junit printsummary="yes" showoutput="on" haltonfailure="yes">
+    <classpath>
+	<pathelement location="${build}"/>
+	<pathelement location="${test}"/>
+	<pathelement path="${build}/com/test"/>
+    </classpath>
+	    <test name="com.test.UnitTest" haltonfailure="no" outfile="result">
+		<formatter type="plain" />
+	    </test>
+          </junit>
+ </target>
+
+
+</project>
